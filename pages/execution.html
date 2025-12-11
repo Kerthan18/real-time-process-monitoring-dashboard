@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Process Monitor — Execution Plan</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script defer src="../js/main.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-title">Process Dashboard</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="overview.html">Overview</a>
+    <a href="modules.html">Modules</a>
+    <a href="functionalities.html">Functionalities</a>
+    <a href="technology.html">Technology</a>
+    <a href="execution.html">Execution Plan</a>
+    <a href="examples.html">Examples</a>
+    <a href="simulation.html">Simulation</a>
+  </div>
+</nav>
+
+<main class="dashboard">
+
+  <section class="card" style="margin-top:20px">
+    <h1>Execution Plan — Step-by-step Implementation Guide</h1>
+    <p style="color:#555;line-height:1.6">
+      This execution plan walks you through building the Real-Time Process Monitoring Dashboard from design to demonstration.
+      It’s divided into phases with concrete tasks, sample commands, and testing tips.
+    </p>
+  </section>
+
+  <!-- Phase 0 -->
+  <section class="card">
+    <h2>Phase 0 — Project Setup</h2>
+    <ul style="color:#555;line-height:1.6">
+      <li>Create project folder structure:
+        <pre style="background:#f2f6ff;padding:8px;border-radius:6px">process-monitor-site/
+  index.html
+  css/styles.css
+  js/main.js
+  pages/
+    overview.html
+    modules.html
+    functionalities.html
+    technology.html
+    execution.html
+    examples.html
+    simulation.html
+</pre>
+      </li>
+      <li>Install VS Code and the <strong>Live Server</strong> extension for quick iterations.</li>
+      <li>Keep code simple: vanilla HTML/CSS/JS to maximize readability for teachers.</li>
+    </ul>
+  </section>
+
+  <!-- Phase 1 -->
+  <section class="card">
+    <h2>Phase 1 — Design & API Definition</h2>
+    <ul style="color:#555;line-height:1.6">
+      <li>Sketch UI wireframes: Dashboard, Process table, Alerts, Settings.</li>
+      <li>Define sample data structure used by the simulation/agent:
+        <pre style="background:#f2f6ff;padding:8px;border-radius:6px">{
+  pid: 1234,
+  name: "worker-1",
+  state: "running",
+  cpu: 12.3,
+  mem: 3.7,
+  timestamp: 1690000000000
+}</pre>
+      </li>
+      <li>Decide update frequency (demo-friendly: 500ms–1500ms). Use 1000ms as a default.</li>
+    </ul>
+  </section>
+
+  <!-- Phase 2 -->
+  <section class="card">
+    <h2>Phase 2 — Build the Simulation Engine (Client-side)</h2>
+    <p style="color:#555;line-height:1.6">Implement a browser-based simulator that produces realistic process metrics so the Dashboard behaves like a production system without requiring elevated permissions.</p>
+    <ul style="color:#555;line-height:1.6">
+      <li>Implement a module `simulator.js` or inline JS that:
+        <ul>
+          <li>Maintains an array of process objects</li>
+          <li>Randomly mutates CPU and memory values every tick</li>
+          <li>Simulates process creation and termination</li>
+        </ul>
+      </li>
+      <li>Expose functions:
+        <pre style="background:#f2f6ff;padding:8px;border-radius:6px">startSimulation(), pauseSimulation(), spawnProcess(), killProcess(pid)</pre>
+      </li>
+      <li>Keep simulated values within sensible ranges and seed the simulator with typical processes (systemd, sshd, browser, db, worker).</li>
+    </ul>
+  </section>
+
+  <!-- Phase 3 -->
+  <section class="card">
+    <h2>Phase 3 — Dashboard UI Implementation</h2>
+    <ul style="color:#555;line-height:1.6">
+      <li>Build charts and bars:
+        <ul><li>Use HTML5 Canvas for lightweight line charts or basic SVG paths.</li><li>Or include Chart.js if allowed — but vanilla canvas is enough.</li></ul>
+      </li>
+      <li>Implement Process Table:
+        <ul><li>Sortable columns by clicking headers (simple JS sort).</li><li>Search input filters rows by PID or name.</li></ul>
+      </li>
+      <li>Add controls & settings:
+        <ul><li>Start/Pause simulation</li><li>Threshold configuration for CPU/Memory</li><li>Action buttons (Inspect, Terminate) — simulated</li></ul>
+      </li>
+      <li>Ensure responsive layout – test on projector and laptop resolutions.</li>
+    </ul>
+  </section>
+
+  <!-- Phase 4 -->
+  <section class="card">
+    <h2>Phase 4 — Alerts, Logging & UI Feedback</h2>
+    <ul style="color:#555;line-height:1.6">
+      <li>Implement alert logic:
+        <pre style="background:#f2f6ff;padding:8px;border-radius:6px">if (proc.cpu > cpuThreshold || proc.mem > memThreshold) {
+  raiseAlert(proc, "High resource usage");
+}</pre>
+      </li>
+      <li>Add an Event Log panel that timestamps notable actions like "Simulated kill PID 1234".</li>
+      <li>Persist demo settings in `localStorage` so thresholds remain between page reloads.</li>
+    </ul>
+  </section>
+
+  <!-- Phase 5 -->
+  <section class="card">
+    <h2>Phase 5 — Testing & Validation</h2>
+    <p style="color:#555;line-height:1.6">Testing is critical to show reliability during your viva.</p>
+    <ul style="color:#555;line-height:1.6">
+      <li><b>Unit Test Ideas:</b>
+        <ul>
+          <li>Simulator keeps CPU values within 0–100%</li>
+          <li>Spawned processes increment total count</li>
+          <li>Kill removes the process correctly</li>
+        </ul>
+      </li>
+      <li><b>Stress Tests (Demo Mode):</b>
+        <ul>
+          <li>Spawn 100 processes quickly and observe UI responsiveness</li>
+          <li>Simulate continuous CPU spikes and validate alert handling</li>
+        </ul>
+      </li>
+      <li><b>Presentation Checklist:</b>
+        <ul>
+          <li>Start/Stop simulation works</li>
+          <li>Process table updates correctly</li>
+          <li>Thresholds generate alerts</li>
+          <li>Action buttons log events</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Phase 6 -->
+  <section class="card">
+    <h2>Phase 6 — Documentation & Demo Script</h2>
+    <p style="color:#555;line-height:1.6">
+      Prepare a short demo script to follow during your presentation. Faculty love a clear step-by-step run-through.
+    </p>
+    <h3>Suggested Demo Script</h3>
+    <ol style="color:#555;line-height:1.6">
+      <li>Open Home → Overview → explain architecture and modules.</li>
+      <li>Open Simulation and press <b>Start</b> — show CPU & memory bars update.</li>
+      <li>Sort process table by CPU and 'Terminate' a simulated process.</li>
+      <li>Adjust CPU threshold to a lower value and cause an alert to display.</li>
+      <li>Explain how a real agent would stream metrics and how security/auth would be handled in production.</li>
+    </ol>
+
+    <h3 style="margin-top:12px">Deliverables for Submission</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Complete source files (HTML/CSS/JS)</li>
+      <li>README with setup instructions</li>
+      <li>Optional ZIP with all files</li>
+      <li>Short presentation slides (3–5 slides) summarizing goals, architecture, and demo steps</li>
+    </ul>
+  </section>
+
+  <!-- Efficiency Tips -->
+  <section class="card">
+    <h2>Efficiency & Performance Tips</h2>
+    <ul style="color:#555;line-height:1.6">
+      <li>Batch DOM updates — update the entire table HTML once per tick instead of row-by-row.</li>
+      <li>Throttle visual updates if CPU on the client becomes high (reduce tick rate to 500–1000ms).</li>
+      <li>Use requestAnimationFrame for smooth canvas animations.</li>
+      <li>Minimize expensive layout operations: avoid frequent calls to getBoundingClientRect in hot loops.</li>
+    </ul>
+  </section>
+
+  <section class="card" style="text-align:center">
+    <a class="btn-primary" href="simulation.html">Open Simulation</a>
+    <a class="btn-secondary" href="examples.html" style="margin-left:10px">View Examples</a>
+  </section>
+
+</main>
+
+</body>
+</html>

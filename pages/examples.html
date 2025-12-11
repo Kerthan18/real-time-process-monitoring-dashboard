@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Process Monitor — Examples & Use Cases</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script defer src="../js/main.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-title">Process Dashboard</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="overview.html">Overview</a>
+    <a href="modules.html">Modules</a>
+    <a href="functionalities.html">Functionalities</a>
+    <a href="technology.html">Technology</a>
+    <a href="execution.html">Execution Plan</a>
+    <a href="examples.html">Examples</a>
+    <a href="simulation.html">Simulation</a>
+  </div>
+</nav>
+
+<main class="dashboard">
+
+<!-- HEADER -->
+<section class="card" style="margin-top:20px">
+  <h1>Examples & Use Cases</h1>
+  <p style="color:#555;line-height:1.6;">
+    This section demonstrates how the dashboard can be used in real-world system administration, troubleshooting,
+    performance monitoring, and educational scenarios. These examples will help you during viva and make your project
+    appear industry-ready.
+  </p>
+</section>
+
+<!-- EXAMPLE 1 -->
+<section class="card">
+  <h2>1. Detecting High CPU Usage</h2>
+  <p style="color:#555;line-height:1.6;">
+    A user reports their system is slow. An administrator opens the dashboard and notices the CPU bar is over 90%.
+    Sorting the process table by CPU%, they identify:
+  </p>
+
+  <pre style="background:#f2f6ff;padding:8px;border-radius:6px">PID: 2890
+Process: chrome-tab-17
+CPU: 92%
+Memory: 12%
+Status: Running</pre>
+
+  <p style="color:#555;line-height:1.6;">
+    They simulate terminating the process (in demo mode), and CPU instantly drops to normal levels.  
+    In real systems, this would help eliminate stuck JavaScript loops or runaway processes.
+  </p>
+</section>
+
+<!-- EXAMPLE 2 -->
+<section class="card">
+  <h2>2. Identifying Memory Leaks</h2>
+  <p style="color:#555;line-height:1.6;">
+    A backend service slowly increases RAM usage due to inefficient object caching. Using the dashboard’s memory graph,
+    the administrator observes:
+  </p>
+
+  <pre style="background:#f2f6ff;padding:8px;border-radius:6px">
+Time → 0s    10s    20s    30s    40s
+Memory → 42% → 55% → 63% → 78% → 92%
+Alert: CRITICAL MEMORY WARNING!
+</pre>
+
+  <p style="color:#555;line-height:1.6;">
+    The administrator tags the process for inspection, restarts the service, and files a bug report for the developers.
+  </p>
+</section>
+
+<!-- EXAMPLE 3 -->
+<section class="card">
+  <h2>3. Detecting Zombie Processes</h2>
+  <p style="color:#555;line-height:1.6;">
+    Zombie processes occur when a parent fails to collect a child’s exit status.  
+    In the dashboard, zombie processes appear in red with a status tag:
+  </p>
+
+  <pre style="background:#f2f6ff;padding:8px;border-radius:6px">
+PID: 3345
+Process: orphan-cleanup
+Status: ZOMBIE
+CPU: 0%
+Memory: 0.1%
+</pre>
+
+  <p style="color:#555;line-height:1.6;">
+    The administrator investigates the parent process and decides to restart it to clean up orphan child processes.
+  </p>
+</section>
+
+<!-- EXAMPLE 4 -->
+<section class="card">
+  <h2>4. University Lab Demonstration</h2>
+  <p style="color:#555;line-height:1.6;">
+    A student presenting this project during viva demonstrates:
+  </p>
+
+  <ol style="color:#555;line-height:1.6;">
+    <li>Automatically updating CPU & memory bars</li>
+    <li>Process list reorganizing itself every second</li>
+    <li>Sorting the table to locate heavy processes</li>
+    <li>Triggering alerts by lowering thresholds</li>
+    <li>Terminating a simulated process</li>
+  </ol>
+
+  <p style="color:#555;line-height:1.6;">
+    Faculty appreciate the professional look and the realistic simulation of operating system behavior.
+  </p>
+</section>
+
+<!-- EXAMPLE 5 -->
+<section class="card">
+  <h2>5. Troubleshooting Slow Servers</h2>
+  <p style="color:#555;line-height:1.6;">
+    System administrators often need to find bottlenecks quickly.  
+    With this dashboard:
+  </p>
+
+  <ul style="color:#555;line-height:1.6;">
+    <li>High memory consumption indicates caching issues</li>
+    <li>CPU spikes indicate runaway threads</li>
+    <li>Zombie processes indicate broken parent-child handling</li>
+    <li>Alert history indicates repetitive issues</li>
+  </ul>
+
+  <p style="color:#555;line-height:1.6;">
+    These insights help administrators take quick action and prevent downtime.
+  </p>
+</section>
+
+<!-- EXAMPLE 6 -->
+<section class="card">
+  <h2>6. Classroom Teaching Tool</h2>
+  <p style="color:#555;line-height:1.6;">
+    Professors can use this dashboard to teach:
+  </p>
+
+  <ul style="color:#555;line-height:1.6;">
+    <li>Process lifecycle stages</li>
+    <li>CPU scheduling concepts</li>
+    <li>Memory management fundamentals</li>
+    <li>Real-time system monitoring</li>
+  </ul>
+
+  <p style="color:#555;line-height:1.6;">The simulation model makes it easy to demonstrate concepts without requiring admin access on lab PCs.</p>
+</section>
+
+<!-- DIAGRAM -->
+<section class="card">
+  <h2>Process Lifecycle (Visualization Diagram)</h2>
+  <p style="color:#555;line-height:1.6;">A simple representation of typical process lifecycle states:</p>
+
+  <div style="display:flex;justify-content:center;padding:8px;">
+    <svg width="840" height="200" viewBox="0 0 840 200" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="60" width="150" height="60" rx="10" fill="#fff" stroke="#dce3f0"/>
+      <text x="95" y="95" text-anchor="middle" fill="#222">New</text>
+
+      <rect x="200" y="60" width="150" height="60" rx="10" fill="#fff" stroke="#dce3f0"/>
+      <text x="275" y="95" text-anchor="middle" fill="#222">Ready</text>
+
+      <rect x="380" y="60" width="150" height="60" rx="10" fill="#fff" stroke="#dce3f0"/>
+      <text x="455" y="95" text-anchor="middle" fill="#222">Running</text>
+
+      <rect x="560" y="60" width="150" height="60" rx="10" fill="#fff" stroke="#dce3f0"/>
+      <text x="635" y="95" text-anchor="middle" fill="#222">Waiting</text>
+
+      <rect x="740" y="60" width="150" height="60" rx="10" fill="#fff" stroke="#dce3f0"/>
+      <text x="815" y="95" text-anchor="middle" fill="#222">Terminated</text>
+
+      <line x1="170" y1="90" x2="200" y2="90" stroke="#0078ff" stroke-width="3"/>
+      <line x1="350" y1="90" x2="380" y2="90" stroke="#0078ff" stroke-width="3"/>
+      <line x1="530" y1="90" x2="560" y2="90" stroke="#0078ff" stroke-width="3"/>
+      <line x1="710" y1="90" x2="740" y2="90" stroke="#0078ff" stroke-width="3"/>
+    </svg>
+  </div>
+</section>
+
+<section class="card" style="text-align:center">
+  <a class="btn-primary" href="simulation.html">Try Simulation</a>
+  <a class="btn-secondary" href="execution.html" style="margin-left:10px">View Execution Plan</a>
+</section>
+
+</main>
+
+</body>
+</html>

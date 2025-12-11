@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Process Monitor – Technology Stack</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script defer src="../js/main.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-title">Process Dashboard</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="overview.html">Overview</a>
+    <a href="modules.html">Modules</a>
+    <a href="functionalities.html">Functionalities</a>
+    <a href="technology.html">Technology</a>
+    <a href="execution.html">Execution Plan</a>
+    <a href="examples.html">Examples</a>
+    <a href="simulation.html">Simulation</a>
+  </div>
+</nav>
+
+<main class="dashboard">
+
+<!-- HEADER -->
+<section class="card" style="margin-top:20px">
+  <h1>Technology Stack</h1>
+  <p style="color:#555; line-height:1.6;">
+    The Real-Time Process Monitoring Dashboard uses a modern and efficient technology stack designed to deliver 
+    fast, dynamic, responsive and browser-friendly monitoring capabilities.  
+    Below is a detailed breakdown of each component and its role.
+  </p>
+</section>
+
+<!-- FRONTEND -->
+<section class="card">
+  <h2>1. Frontend Technologies</h2>
+  <p style="color:#555; line-height:1.6;">
+    The dashboard runs entirely in the browser, making it portable, lightweight, and easy to demonstrate across platforms.
+  </p>
+
+  <h3>HTML5</h3>
+  <p style="color:#555; line-height:1.6;">
+    Used to structure the layout, build tables, charts, navigation menus, simulation panels, and responsive content blocks.
+  </p>
+
+  <h3>CSS3</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Provides Apple-inspired clean UI</li>
+    <li>Makes layout responsive across screen sizes</li>
+    <li>Adds animations, gradients, and rounded UI elements</li>
+    <li>Ensures consistent design across all pages</li>
+  </ul>
+
+  <h3>JavaScript (Vanilla JS)</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Controls real-time simulation engine (CPU & Memory updates)</li>
+    <li>Generates random process data for demo environment</li>
+    <li>Handles alerts, table updates, interactions, and UI animations</li>
+    <li>Future-ready for connecting a WebSocket backend</li>
+  </ul>
+
+  <h3>Why No Frameworks?</h3>
+  <p style="color:#555; line-height:1.6;">
+    This project avoids React/Vue/Angular intentionally because university submissions prefer  
+    <b>clean, readable, framework-free code</b> that teachers can easily understand and grade.
+  </p>
+</section>
+
+<!-- BACKEND (Optional Production Agent) -->
+<section class="card">
+  <h2>2. Backend (Optional for Future Use)</h2>
+  <p style="color:#555; line-height:1.6;">
+    Although the project runs entirely in client-side simulation mode, a backend can be implemented later for real process monitoring.
+    This optional backend is known as a <b>System Agent</b>.
+  </p>
+
+  <h3>Recommended Backend Technologies:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li><b>Node.js</b> — Easy to build real-time WebSocket APIs</li>
+    <li><b>Python (psutil)</b> — Access process & system metrics with minimal code</li>
+    <li><b>Go</b> — Very fast for system-level monitoring and concurrency</li>
+    <li><b>Rust</b> — High performance + safety</li>
+  </ul>
+
+  <h3>Backend Responsibilities (in production):</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Reading <code>/proc</code> directories (Linux) for accurate metrics</li>
+    <li>Gathering CPU & memory statistics</li>
+    <li>Performing authenticated process actions</li>
+    <li>Streaming updates to dashboard via WebSocket</li>
+  </ul>
+
+  <p style="color:#555; line-height:1.6;">
+    <b>Note:</b> None of these backend elements are required for your university assignment —  
+    the simulation handles all real-time aspects locally and safely.
+  </p>
+</section>
+
+<!-- DATA HANDLING -->
+<section class="card">
+  <h2>3. Data Handling & Simulation Engine</h2>
+  <p style="color:#555; line-height:1.6;">
+    The dashboard uses a browser-based simulation system. It regenerates random values for CPU usage, memory consumption,
+    and process table entries every second to mimic real system activity.
+  </p>
+
+  <h3>Key technologies used:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li><b>setInterval()</b> for timed metric updates</li>
+    <li><b>DOM manipulation</b> to refresh charts & tables</li>
+    <li><b>Math.random()</b> to produce dynamic, unpredictable values</li>
+    <li><b>CSS transitions</b> for smooth bar animations</li>
+  </ul>
+
+  <h3>Why Simulation is Better for Demo?</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>No system access required → safe for Windows, Mac, Linux</li>
+    <li>No permissions needed</li>
+    <li>Works offline → ideal for classroom or viva</li>
+    <li>Zero chance of harming system processes</li>
+    <li>Still behaves realistically enough to simulate real monitoring tools</li>
+  </ul>
+</section>
+
+<!-- VISUALIZATION -->
+<section class="card">
+  <h2>4. Visualization Techniques</h2>
+  <p style="color:#555; line-height:1.6;">
+    Charts and bars are designed to be visually clean and easy for instructors to read on projectors.
+  </p>
+
+  <h3>UI Elements Used:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Animated bars for CPU & memory</li>
+    <li>Color-coded alerts (green → safe, red → critical)</li>
+    <li>Tables that update every second</li>
+    <li>Shadowed cards resembling Apple’s UI style</li>
+  </ul>
+
+  <h3>Optional Add-ons:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Graph.js or Chart.js integration</li>
+    <li>Dark Mode toggle</li>
+    <li>Animated transitions for processes entering/exiting table</li>
+  </ul>
+</section>
+
+<!-- ARCHITECTURE DIAGRAM -->
+<section class="card">
+  <h2>Technology Architecture</h2>
+  <p style="color:#555; line-height:1.6;">This simplified diagram shows the data flow in real and simulated modes:</p>
+
+  <div style="display:flex;justify-content:center;padding:8px;">
+    <svg width="760" height="220" viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg">
+      <rect x="20" y="60" width="200" height="100" rx="12" fill="#fff" stroke="#d9e1ee"/>
+      <text x="120" y="110" font-size="14" text-anchor="middle" fill="#222">Dashboard UI</text>
+
+      <rect x="280" y="30" width="200" height="160" rx="12" fill="#fff" stroke="#d9e1ee"/>
+      <text x="380" y="110" font-size="14" text-anchor="middle" fill="#222">Simulation Engine</text>
+
+      <rect x="540" y="60" width="200" height="100" rx="12" fill="#fff" stroke="#d9e1ee"/>
+      <text x="640" y="110" font-size="14" text-anchor="middle" fill="#222">Actual System (Optional)</text>
+
+      <line x1="220" y1="110" x2="280" y2="110" stroke="#0078ff" stroke-width="3"/>
+      <line x1="480" y1="110" x2="540" y2="110" stroke="#0078ff" stroke-width="3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- BUTTONS -->
+<section class="card" style="text-align:center;">
+  <a class="btn-primary" href="simulation.html">Try Simulation</a>
+  <a class="btn-secondary" href="execution.html">View Execution Plan</a>
+</section>
+
+</main>
+
+</body>
+</html>

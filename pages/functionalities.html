@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Process Monitor – Functionalities</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script defer src="../js/main.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-title">Process Dashboard</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="overview.html">Overview</a>
+    <a href="modules.html">Modules</a>
+    <a href="functionalities.html">Functionalities</a>
+    <a href="technology.html">Technology</a>
+    <a href="execution.html">Execution Plan</a>
+    <a href="examples.html">Examples</a>
+    <a href="simulation.html">Simulation</a>
+  </div>
+</nav>
+
+<main class="dashboard">
+
+<!-- HEADER -->
+<section class="card" style="margin-top:20px">
+  <h1>Key Functionalities of the Real-Time Process Monitoring Dashboard</h1>
+  <p style="color:#555; line-height:1.6;">
+    The dashboard contains a rich set of features designed to assist system administrators, developers,
+    and students in observing, analysing, and managing active processes on a system.  
+    Below is an in-depth explanation of each functionality along with real-world examples.
+  </p>
+</section>
+
+<!-- FUNCTIONALITY 1 -->
+<section class="card">
+  <h2>1. Live CPU Usage Monitoring</h2>
+  <p style="color:#555; line-height:1.6;">
+    The dashboard updates CPU usage every second. It tracks overall CPU load and displays it as a 
+    visually appealing animated bar or graph.  
+    Helps identify heavy processes or CPU spikes in real-time.
+  </p>
+
+  <h3>Key Features:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Dynamic CPU bar visualization</li>
+    <li>Automatic scaling with system load</li>
+    <li>High-CPU alerts when thresholds exceed safe limits</li>
+    <li>Pattern detection (continuous spikes, unusual CPU drops)</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <p style="color:#555; line-height:1.6;">
+    A developer running a malfunctioning script sees CPU usage spike above 90%.  
+    The dashboard instantly displays a **High CPU Alert** allowing quick corrective action.
+  </p>
+</section>
+
+<!-- FUNCTIONALITY 2 -->
+<section class="card">
+  <h2>2. Real-Time Memory Usage Tracking</h2>
+  <p style="color:#555; line-height:1.6;">
+    Memory usage is tracked in real time. This helps administrators diagnose leaks or processes that 
+    consume unusually high memory over time.
+  </p>
+
+  <h3>Key Features:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Animated memory usage bar</li>
+    <li>Alerts when memory reaches critical level</li>
+    <li>Supports comparison between processes</li>
+    <li>Graphs can show memory trend over the last 10–60 seconds</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <p style="color:#555; line-height:1.6;">
+    A web server slowly increases memory usage because of a memory leak.  
+    The dashboard shows memory climbing gradually from 45% to 70% to 90%, triggering a **Memory Critical Alert**.
+  </p>
+</section>
+
+<!-- FUNCTIONALITY 3 -->
+<section class="card">
+  <h2>3. Detailed Process Table</h2>
+  <p style="color:#555; line-height:1.6;">
+    The process table lists all active processes along with their resource usage.  
+    It auto-refreshes at regular intervals to stay up to date.
+  </p>
+
+  <h3>Columns Included:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li><b>PID</b> — Unique ID of each process</li>
+    <li><b>Process Name</b> — Executable or application name</li>
+    <li><b>Status</b> — Running, Sleeping, Zombie, Stopped</li>
+    <li><b>CPU %</b> — Processor consumption</li>
+    <li><b>Memory %</b> — Memory footprint of the process</li>
+    <li><b>Actions</b> — Terminate, suspend, restart (simulated)</li>
+  </ul>
+
+  <h3>Supported Features:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Sorting by CPU or Memory usage</li>
+    <li>Search by name or PID</li>
+    <li>Highlight dangerous processes automatically</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <p style="color:#555; line-height:1.6;">
+    You sort the table by CPU% and instantly find the top processes consuming maximum CPU.
+  </p>
+</section>
+
+<!-- FUNCTIONALITY 4 -->
+<section class="card">
+  <h2>4. Alerts & Notifications Module</h2>
+  <p style="color:#555; line-height:1.6;">
+    The dashboard includes an intelligent alerting system that detects unusual behavior and warns users immediately.
+  </p>
+
+  <h3>Alert Types:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li><b>High CPU Alert</b> — Triggered if CPU exceeds threshold</li>
+    <li><b>High Memory Alert</b> — Triggered when memory usage becomes unsafe</li>
+    <li><b>Zombie Process Alert</b> — Detected when orphan processes accumulate</li>
+    <li><b>Critical System Health Alert</b> — When multiple metrics exceed safe levels</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <p style="color:#555; line-height:1.6;">
+    If CPU usage remains above 90% for 10 seconds, the system warns <b>"Critical CPU Load Detected"</b>  
+    allowing administrators to inspect currently running processes.
+  </p>
+</section>
+
+<!-- FUNCTIONALITY 5 -->
+<section class="card">
+  <h2>5. Process Management (Simulated Controls)</h2>
+  <p style="color:#555; line-height:1.6;">
+    The dashboard allows administrators to take actions on suspicious processes.  
+    For safety reasons in the demonstration, actions are simulated and DO NOT affect your operating system.
+  </p>
+
+  <h3>Supported Actions:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li><b>Terminate Process</b> — Kills a misbehaving process</li>
+    <li><b>Restart Process</b> — Simulates restarting of an app</li>
+    <li><b>Pause/Resume</b> — Used when investigating unusual activity</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <p style="color:#555; line-height:1.6;">
+    A student uses the dashboard to terminate a zombie process and demonstrates how process control is handled.
+  </p>
+</section>
+
+<!-- FUNCTIONALITY 6 -->
+<section class="card">
+  <h2>6. System Health Summary</h2>
+  <p style="color:#555; line-height:1.6;">
+    A high-level overview page shows combined system health based on CPU load, memory pressure,  
+    number of running processes, and alert history.
+  </p>
+
+  <h3>Displayed Metrics:</h3>
+  <ul style="color:#555; line-height:1.6;">
+    <li>Total Processes</li>
+    <li>System Load Average</li>
+    <li>Memory Pressure Level</li>
+    <li>Count of Active Alerts</li>
+    <li>Uptime (demo simulated)</li>
+  </ul>
+</section>
+
+<!-- BOTTOM BUTTON -->
+<section class="card" style="text-align:center;">
+  <a class="btn-primary" href="simulation.html">Try Simulation</a>
+  <a class="btn-secondary" href="technology.html">View Technology</a>
+</section>
+
+</main>
+
+</body>
+</html>

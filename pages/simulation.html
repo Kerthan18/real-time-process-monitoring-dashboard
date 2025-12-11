@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simulation — Real-Time Process Monitoring</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script defer src="../js/main.js"></script>
+
+<style>
+/* Extra styling for Simulation only */
+.sim-box {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+.sim-left, .sim-right {
+  flex: 1;
+}
+.sim-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 22px;
+  background: #e3e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  transition: width 0.9s ease-in-out;
+  background: linear-gradient(90deg,#007bff,#00d4ff);
+  border-radius: 12px;
+}
+
+#processTable td, #processTable th {
+  padding: 8px;
+}
+#processTable tr:hover {
+  background: #f0f4ff;
+  cursor: pointer;
+}
+
+.alert-box {
+  padding: 10px;
+  background: #ffe5e5;
+  border-left: 5px solid red;
+  color: #990000;
+  margin-top: 10px;
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-title">Process Dashboard</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="overview.html">Overview</a>
+    <a href="modules.html">Modules</a>
+    <a href="functionalities.html">Functionalities</a>
+    <a href="technology.html">Technology</a>
+    <a href="execution.html">Execution Plan</a>
+    <a href="examples.html">Examples</a>
+    <a href="simulation.html">Simulation</a>
+  </div>
+</nav>
+
+<main class="dashboard">
+
+<section class="card" style="margin-top:20px">
+  <h1>Real-Time Process Simulation</h1>
+  <p style="color:#555;">
+    This is a **fully interactive process monitoring simulator** created for your class project.  
+    You can add processes, kill them, observe CPU/memory fluctuations, and watch alerts appear automatically.
+  </p>
+</section>
+
+<div class="sim-box">
+
+<!-- LEFT SIDE -->
+<div class="sim-left">
+
+  <!-- CONTROL PANEL -->
+  <div class="sim-card">
+    <h2>Simulation Controls</h2>
+
+    <button id="startBtn" class="btn-primary" style="margin-right:10px">Start Simulation</button>
+    <button id="stopBtn" class="btn-secondary">Stop Simulation</button>
+
+    <hr style="margin:15px 0">
+
+    <h3>Add New Process</h3>
+    <input type="text" id="procName" placeholder="Process name" style="padding:10px;width:70%">
+    <button id="addProcBtn" class="btn-primary">Add</button>
+
+    <h3 style="margin-top:20px">Kill Process</h3>
+    <input type="number" id="killPid" placeholder="Enter PID" style="padding:10px;width:70%">
+    <button id="killProcBtn" class="btn-secondary">Kill</button>
+
+    <div id="killStatus" style="color:#555;margin-top:10px;"></div>
+  </div>
+
+  <!-- ALERT PANEL -->
+  <div class="sim-card">
+    <h2>Alerts</h2>
+    <div id="alertBox" class="alert-box">High CPU or Memory Detected!</div>
+  </div>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="sim-right">
+
+  <!-- CPU -->
+  <div class="sim-card">
+    <h3>CPU Usage</h3>
+    <div class="progress-bar">
+      <div id="cpuFill" class="progress-fill"></div>
+    </div>
+    <div id="cpuLabel" style="margin-top:6px;color:#333;">0%</div>
+  </div>
+
+  <!-- MEMORY -->
+  <div class="sim-card">
+    <h3>Memory Usage</h3>
+    <div class="progress-bar">
+      <div id="memFill" class="progress-fill"></div>
+    </div>
+    <div id="memLabel" style="margin-top:6px;color:#333;">0%</div>
+  </div>
+</div>
+
+</div>
+
+<!-- PROCESS TABLE -->
+<section class="card">
+  <h2>Process Table</h2>
+
+  <table id="processTable" border="1" width="100%" style="border-collapse: collapse;">
+    <thead>
+      <tr style="background:#eef3ff">
+        <th>PID</th>
+        <th>Name</th>
+        <th>CPU %</th>
+        <th>Memory %</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="processBody"></tbody>
+  </table>
+</section>
+
+</main>
+
+<!-- SIMULATION LOGIC -->
+<script>
+let running = false;
+let processes = [];
+let pidCounter = 1000;
+
+function random(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function addProcess(name){
+  processes.push({
+    pid: pidCounter++,
+    name: name || "background-task",
+    cpu: random(1, 20),
+    mem: random(1, 15),
+    status: "Running"
+  });
+}
+
+function killProcess(pid){
+  const index = processes.findIndex(p => p.pid == pid);
+  if(index !== -1){
+    processes.splice(index,1);
+    return true;
+  }
+  return false;
+}
+
+function updateTable(){
+  const body = document.getElementById("processBody");
+  body.innerHTML = "";
+
+  processes.forEach(proc => {
+    // simulate fluctuation
+    proc.cpu = Math.min(100, Math.max(0, proc.cpu + random(-5,5)));
+    proc.mem = Math.min(100, Math.max(0, proc.mem + random(-3,4)));
+
+    const row = `
+      <tr>
+        <td>${proc.pid}</td>
+        <td>${proc.name}</td>
+        <td>${proc.cpu}%</td>
+        <td>${proc.mem}%</td>
+        <td>${proc.status}</td>
+      </tr>
+    `;
+    body.innerHTML += row;
+  });
+}
+
+function updateBars(){
+  let avgCpu = 0, avgMem = 0;
+
+  if(processes.length > 0){
+    processes.forEach(p=>{
+      avgCpu += p.cpu;
+      avgMem += p.mem;
+    });
+    avgCpu = Math.floor(avgCpu / processes.length);
+    avgMem = Math.floor(avgMem / processes.length);
+  }
+
+  document.getElementById("cpuFill").style.width = avgCpu + "%";
+  document.getElementById("memFill").style.width = avgMem + "%";
+
+  document.getElementById("cpuLabel").innerText = avgCpu + "%";
+  document.getElementById("memLabel").innerText = avgMem + "%";
+
+  // alerts
+  const alertBox = document.getElementById("alertBox");
+  if(avgCpu > 80 || avgMem > 80){
+    alertBox.style.display = "block";
+  } else {
+    alertBox.style.display = "none";
+  }
+}
+
+function tick(){
+  if(!running) return;
+  updateTable();
+  updateBars();
+  setTimeout(tick, 1000);
+}
+
+// BUTTON ACTIONS
+document.getElementById("startBtn").onclick = () => {
+  if(!running){
+    running = true;
+    if(processes.length === 0){
+      addProcess("systemd");
+      addProcess("chrome");
+      addProcess("vscode");
+      addProcess("python-script");
+    }
+    tick();
+  }
+};
+
+document.getElementById("stopBtn").onclick = () => {
+  running = false;
+};
+
+document.getElementById("addProcBtn").onclick = () => {
+  const name = document.getElementById("procName").value.trim();
+  addProcess(name || "custom-process");
+  document.getElementById("procName").value = "";
+};
+
+document.getElementById("killProcBtn").onclick = () => {
+  const pid = document.getElementById("killPid").value;
+  const result = killProcess(pid);
+  document.getElementById("killStatus").innerText = result
+    ? "Process killed successfully."
+    : "PID not found.";
+  document.getElementById("killPid").value = "";
+};
+</script>
+
+</body>
+</html>

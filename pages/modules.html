@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Process Monitor — Modules</title>
+<link rel="stylesheet" href="../css/styles.css">
+<script defer src="../js/main.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-title">Process Dashboard</div>
+  <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <a href="overview.html">Overview</a>
+    <a href="modules.html">Modules</a>
+    <a href="functionalities.html">Functionalities</a>
+    <a href="technology.html">Technology</a>
+    <a href="execution.html">Execution Plan</a>
+    <a href="examples.html">Examples</a>
+    <a href="simulation.html">Simulation</a>
+  </div>
+</nav>
+
+<main class="dashboard">
+
+  <section class="card" style="margin-top:20px">
+    <h1>Module-Wise Breakdown</h1>
+    <p style="color:#555;line-height:1.6">
+      The system is organized into three major modules — each with clear responsibilities. This modular design helps testing, allows safe simulation locally, and separates concerns so you can later swap the client-side simulator for a real backend agent.
+    </p>
+  </section>
+
+  <!-- MODULE 1 -->
+  <section class="card">
+    <h2>1. Data Collection & Agent Module</h2>
+    <p style="color:#555;line-height:1.6">
+      This module is responsible for gathering process- and system-level metrics. In a production setup it runs on the host, reads `/proc` (Linux) or uses platform APIs (Windows / macOS), and streams metrics to the Dashboard (via WebSocket or HTTP). For the demo, its behavior is simulated inside the browser.
+    </p>
+
+    <h3>Responsibilities</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Collect process list: PID, name, owner, state, CPU%, memory%.</li>
+      <li>Aggregate system metrics: total CPU usage, per-core stats, memory used/free, swap.</li>
+      <li>Periodically sample metrics (configurable interval: e.g., 500ms–2000ms).</li>
+      <li>Provide a secure endpoint or socket for UI to subscribe to (WebSocket recommended).</li>
+    </ul>
+
+    <h3>Design Considerations</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Agent should run with least privilege required to read metrics.</li>
+      <li>Rate-limit and batch metrics to avoid overwhelming network or UI.</li>
+      <li>Use structured JSON or binary protocol for efficiency (protobuf/flatbuffers optional).</li>
+      <li>Implement heartbeats and reconnect logic for resilient streaming.</li>
+    </ul>
+
+    <h3>Example (Production)</h3>
+    <p style="color:#555;line-height:1.6">A Node/Python agent reads `/proc/<pid>/stat` or uses psutil, builds a JSON payload every 1s, and pushes to dashboard via WebSocket.</p>
+  </section>
+
+  <!-- MODULE 2 -->
+  <section class="card">
+    <h2>2. Visualization & UI Module</h2>
+    <p style="color:#555;line-height:1.6">
+      The UI module renders data in an understandable and actionable way. It contains the Dashboard, configuration panels, filters, sorting, and simulation controls used during the demo.
+    </p>
+
+    <h3>Responsibilities</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Render time-series graphs for CPU and memory (line charts).</li>
+      <li>Render process table with sortable columns and search.</li>
+      <li>Provide filtering for process states, owners, or resource thresholds.</li>
+      <li>Expose control actions (Inspect, Pause/Resume, Terminate) — simulated in the demo.</li>
+      <li>UI state management (maintain history windows, charts, and alert overlays).</li>
+    </ul>
+
+    <h3>Key Features</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Responsive design so the UI works on laptop/projector screens.</li>
+      <li>Light/Dark theme toggles (optional) for presentation preference.</li>
+      <li>Exportable snapshots (CSV of top processes, PNG of charts) for grading/demo reports.</li>
+      <li>Client-side simulation engine used when agent is not connected.</li>
+    </ul>
+
+    <h3>Example (UI Flow)</h3>
+    <ol style="color:#555;line-height:1.6">
+      <li>Instructor clicks "Start Simulation". Charts begin updating. List populates with fake processes.</li>
+      <li>Instructor sorts by CPU% to show top consumers.</li>
+      <li>Instructor triggers "Terminate" for a demo process and explains how the agent would perform authenticated termination in production.</li>
+    </ol>
+  </section>
+
+  <!-- MODULE 3 -->
+  <section class="card">
+    <h2>3. Alerting, Policy & Management Module</h2>
+    <p style="color:#555;line-height:1.6">
+      This module helps administrators define thresholds, alert rules, and safe admin actions. It focuses on actionable intelligence and safety for process management.
+    </p>
+
+    <h3>Responsibilities</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Define alert rules: CPU > X%, memory > Y% for Z seconds.</li>
+      <li>Raise visual alerts and optional notifications (email/Slack) in real deployments.</li>
+      <li>Provide role-based access: read-only viewers vs. admin controls.</li>
+      <li>Log actions and provide an audit trail for all admin operations.</li>
+    </ul>
+
+    <h3>Key Features</h3>
+    <ul style="color:#555;line-height:1.6">
+      <li>Threshold configuration UI with hysteresis to avoid flapping.</li>
+      <li>Alert aggregation to prevent notification storms.</li>
+      <li>Safe action simulation mode (demo) and a secure action mode (prod) that requires authentication and confirmation.</li>
+      <li>Logging & persistence: record notable events and administrative decisions.</li>
+    </ul>
+
+    <h3>Example (Alert Scenario)</h3>
+    <p style="color:#555;line-height:1.6">
+      A process starts consuming 95% CPU for more than 10 seconds. The Alerting module highlights the process, adds it to the "High CPU" group, and displays mitigation suggestions: "Inspect stack", "Restart process", or "Throttle/scale consumers".
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Integration Points & Extensibility</h2>
+    <ul style="color:#555;line-height:1.6">
+      <li><b>Agent API:</b> WebSocket or HTTP SSE for streaming telemetry.</li>
+      <li><b>Auth:</b> OAuth2 / JWT for secure action authorization in production.</li>
+      <li><b>Extensibility:</b> Add new collectors (container metrics, GPU usage) as plugins to the Agent module.</li>
+      <li><b>Persistence:</b> Forward metrics to a TSDB (InfluxDB / Prometheus remote write) for long-term analysis.</li>
+    </ul>
+  </section>
+
+  <section class="card" style="text-align:center">
+    <a class="btn-primary" href="simulation.html">Open Simulation</a>
+    <a class="btn-secondary" href="functionalities.html" style="margin-left:12px">View Functionalities</a>
+  </section>
+
+</main>
+
+</body>
+</html>
